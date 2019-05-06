@@ -135,10 +135,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (hitCheck) {
                     if (isBreatheOut) {
-                        if (highestVol >= 75) {
+                        if (highestVol >= 77) {
                             changeHighlight(1);
                             blockStatus[state] = 3;
-                        } else if (highestVol >= 51) {
+                        } else if (highestVol >= 41) {
                             changeHighlight(2);
                             state += 1;
                             if (state > 3)
@@ -160,10 +160,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     } else {
-                        if (highestVol >= 76) {
+                        if (highestVol >= 77) {
                             changeHighlight(4);
                             blockStatus[state] = 1;
-                        } else if (highestVol >= 51) {
+                        } else if (highestVol >= 41) {
                             changeHighlight(3);
                             state -= 1;
                             if (state < 0)

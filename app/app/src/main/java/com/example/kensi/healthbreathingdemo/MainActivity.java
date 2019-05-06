@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        play = (Button) findViewById(R.id.play);
-//        stop = (Button) findViewById(R.id.stop);
         start = findViewById(R.id.start);
         reset = findViewById(R.id.reset);
         volume = findViewById(R.id.volume);
@@ -61,21 +59,25 @@ public class MainActivity extends AppCompatActivity {
     private class CheckAudio extends AsyncTask<String, Void, String> {
         private SoundMeter soundMeter;
         private int volLevel;
+        private double volLevelDoub;
         private int state=0;
         private boolean hitVol = false, hitCheck = false;
         private View rect0, rect1, rect2, rect3;
         private int highestVol = 0;
         public int[] blockStatus = {0,0,0,0};
+        private boolean isBreatheOut = true;
 
         @Override
         protected String doInBackground(String... params) {
             while (true){
                 if(isCancelled())
                     break;
-                volLevel = (int) soundMeter.getAmplitude()/320;
-                volume.setProgress(volLevel);
+                volLevelDoub = soundMeter.getAmplitude()/320;
+                volLevel = (int) volLevelDoub;
+                Log.d("tag", String.valueOf(volLevel));
+                volume.setProgress((int) (isBreatheOut? 50-(volLevelDoub/2):(volLevelDoub/2)+50));
                 try{
-                    Thread.sleep(1);
+                    Thread.sleep(2);
                 } catch (Exception e) {
 
                 }
@@ -87,26 +89,53 @@ public class MainActivity extends AppCompatActivity {
                 if (hitVol && volLevel<10){
                     hitCheck = true;
                     hitVol = false;
+                    isBreatheOut = !isBreatheOut;
                 }
                 if (hitCheck){
-                    if (highestVol >95){
-                        blockStatus [state] = 4;
-                    } else {
-                        state += 1;
-                        if (state > 3)
-                            state = 0;
-                        for (int i = 0; i<=3;i++){
-                            if(i==state){
-                                if (blockStatus [i] != 2){
-                                    blockStatus [i] = 1;
+                    if (isBreatheOut) {
+                        if (highestVol > 95) {
+                            blockStatus[state] = 3;
+                        } else  if (highestVol>40){
+                            state += 1;
+                            if (state > 3)
+                                state = 0;
+                            for (int i = 0; i <= 3; i++) {
+                                if (i == state) {
+                                    if (blockStatus[i] != 2) {
+                                        blockStatus[i] = 1;
+                                    } else {
+                                        blockStatus[i] = 3;
+                                    }
                                 } else {
-                                    blockStatus [i] = 4;
+                                    if (blockStatus[i] == 3) {
+                                        blockStatus[i] = 2;
+                                    } else if (blockStatus[i] != 2) {
+                                        blockStatus[i] = 0;
+                                    }
                                 }
-                            } else {
-                                if (blockStatus [i] == 4){
-                                    blockStatus [i] = 2;
-                                } else if (blockStatus [i] != 2){
-                                    blockStatus [i] = 0;
+                            }
+                        }
+                    }
+                    else {
+                        if (highestVol > 95) {
+                                blockStatus[state] = 1;
+                        } else if (highestVol>40) {
+                            state -= 1;
+                            if (state < 0)
+                                state = 3;
+                            for (int i = 0; i <= 3; i++) {
+                                if (i == state) {
+                                    if (blockStatus[i] != 2) {
+                                        blockStatus[i] = 1;
+                                    } else {
+                                        blockStatus[i] = 3;
+                                    }
+                                } else {
+                                    if (blockStatus[i] == 3) {
+                                        blockStatus[i] = 2;
+                                    } else if (blockStatus[i] != 2) {
+                                        blockStatus[i] = 0;
+                                    }
                                 }
                             }
                         }
@@ -117,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         rect0.setBackgroundColor(Color.parseColor("#00FF00"));
                     } else if (blockStatus[0] == 2){
                         rect0.setBackgroundColor(Color.parseColor("#0000FF"));
-                    } else if (blockStatus[0] == 4){
+                    } else if (blockStatus[0] == 3){
                         rect0.setBackgroundColor(Color.parseColor("#00A0FF"));
                     }
                     if (blockStatus[1] == 0){
@@ -126,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                         rect1.setBackgroundColor(Color.parseColor("#00FF00"));
                     } else if (blockStatus[1] == 2){
                         rect1.setBackgroundColor(Color.parseColor("#0000FF"));
-                    } else if (blockStatus[1] == 4){
+                    } else if (blockStatus[1] == 3){
                         rect1.setBackgroundColor(Color.parseColor("#00A0FF"));
                     }
                     if (blockStatus[2] == 0){
@@ -135,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                         rect2.setBackgroundColor(Color.parseColor("#00FF00"));
                     } else if (blockStatus[2] == 2){
                         rect2.setBackgroundColor(Color.parseColor("#0000FF"));
-                    } else if (blockStatus[2] == 4){
+                    } else if (blockStatus[2] == 3){
                         rect2.setBackgroundColor(Color.parseColor("#00A0FF"));
                     }
                     if (blockStatus[3] == 0){
@@ -144,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                         rect3.setBackgroundColor(Color.parseColor("#00FF00"));
                     } else if (blockStatus[3] == 2){
                         rect3.setBackgroundColor(Color.parseColor("#0000FF"));
-                    } else if (blockStatus[3] == 4){
+                    } else if (blockStatus[3] == 3){
                         rect3.setBackgroundColor(Color.parseColor("#00A0FF"));
                     }
                     hitCheck = false;

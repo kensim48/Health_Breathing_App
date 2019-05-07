@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:keepScreenOn="true">
 
     <View
         android:id="@+id/rect0"
-        android:layout_width="135dp"
-        android:layout_height="81dp"
+        android:layout_width="228dp"
+        android:layout_height="137dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="45dp"
         android:background="#DDDDDD"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,74 +21,129 @@
 
     <View
         android:id="@+id/rect1"
-        android:layout_width="135dp"
-        android:layout_height="81dp"
+        android:layout_width="228dp"
+        android:layout_height="137dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="45dp"
         android:background="#DDDDDD"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rect0"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/rect2"
-        android:layout_width="135dp"
-        android:layout_height="83dp"
+        android:layout_width="228dp"
+        android:layout_height="137dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="45dp"
         android:background="#DDDDDD"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rect0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:id="@+id/rect3"
-        android:layout_width="135dp"
-        android:layout_height="79dp"
+        android:layout_width="228dp"
+        android:layout_height="137dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="45dp"
         android:background="#DDDDDD"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rect1" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rect2" />
 
     <Button
         android:id="@+id/reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginBottom="80dp"
         android:text="Reset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/rect3"
+        app:layout_constraintEnd_toEndOf="@+id/start" />
 
     <Button
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginBottom="8dp"
         android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/reset"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
-        android:id="@+id/volume"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="321dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/volume0"
+        style="@style/Widget.ProgressBar.Vertical"
+        android:layout_width="43dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/volume1"
+        style="@style/Widget.ProgressBar.Vertical2"
+        android:layout_width="43dp"
+        android:layout_height="190dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volume0" />
+
+    <ImageView
+        android:id="@+id/tick"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/volume0"
+        app:layout_constraintStart_toStartOf="@+id/volume0"
+        app:layout_constraintTop_toTopOf="@+id/volume0"
+        app:srcCompat="@drawable/tick"
+        />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="43dp"
+        android:layout_height="68dp"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/volume0"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/volume0"
+        app:layout_constraintTop_toBottomOf="@+id/tick"
+        app:srcCompat="@drawable/next" />
+
+    <ImageView
+        android:id="@+id/prev"
+        android:layout_width="43dp"
+        android:layout_height="68dp"
+        android:alpha="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/cross"
+        app:layout_constraintEnd_toEndOf="@+id/volume1"
+        app:layout_constraintStart_toStartOf="@+id/volume1"
+        app:srcCompat="@drawable/prev" />
+
+    <ImageView
+        android:id="@+id/cross"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:alpha="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/volume1"
+        app:layout_constraintEnd_toEndOf="@+id/volume1"
+        app:layout_constraintStart_toStartOf="@+id/volume1"
+        app:srcCompat="@drawable/cross" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:alpha="0.6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/volume1"
+        app:layout_constraintEnd_toEndOf="@+id/volume0"
+        app:layout_constraintStart_toStartOf="@+id/volume0"
+        app:layout_constraintTop_toTopOf="@+id/volume1"
+        app:srcCompat="@drawable/line" />
+
 
 </android.support.constraint.ConstraintLayout>
